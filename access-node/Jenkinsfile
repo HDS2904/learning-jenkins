@@ -13,7 +13,7 @@ pipeline {
           if (tipoNode == 'EC2') {
             sh  "sudo useradd -d /home/$USUARIO  -m -p \$(echo '$PASSWORD' | openssl passwd -1 -stdin) $USUARIO"
           } else {
-            sh  "useradd -m -s /bin/bash $USUARIO && echo '$USUARIO:$PASSWORD' | sudo chpasswd"
+            sh  "sudo useradd -m -s /bin/bash $USUARIO && echo '$USUARIO:$PASSWORD' | sudo chpasswd"
           }
         }
 
