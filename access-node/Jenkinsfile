@@ -3,12 +3,18 @@ pipeline {
   parameters {
       string defaultValue: '', description: 'Nombre del usuario a crear', name: 'USUARIO', trim: true
       string defaultValue: '', description: 'contraseña nueva del usuario a crear', name: 'PASSWORD', trim: true
+      choice choices: ['Docker','EC2'], description: 'Tipo de instancia ubuntu', name: 'TIPONODE'
   }
   stages {
     stage ('Creando Usuario') {
       steps {
         script {
+          def tipoNode="${TIPONODE}"
+          if (tipoNode == 'EC2') {
             sh  "sudo useradd -d /home/$USUARIO  -m -p \$(echo '$PASSWORD' | openssl passwd -1 -stdin) $USUARIO"
+          } else {
+            sh  "useradd -m -s /bin/bash $USUARIO && echo '$USUARIO:$PASSWORD' | sudo chpasswd"
+          }
         }
 
       }
