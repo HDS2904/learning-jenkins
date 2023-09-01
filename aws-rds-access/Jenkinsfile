@@ -17,7 +17,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'mysql', passwordVariable: 'PASSWD_DB', usernameVariable: 'USER_DB')]) {
           script {
             def tipousuario="${TIPOUSUARIO}"
-            def browsers ="rds-mysql"
+            def browsers ="database-1"
             if (browsers.size()>0){
               if (tipousuario=="Admin"){
                 PERMISO= PERMISO +","+ ADMINPERMISO
